@@ -275,6 +275,13 @@ Size Chart:
 
 Note: LinkedIn calculates company size by counting how many members list that company as their current employer on their profiles, and in practise most companies are slightly larger than their category.
 
+
+### industryCompanyVertical=%5B"industry-keys"%5D
+
+Searches for companies in that industry
+
+Refer to this website: [Official LinkedIn Documentation](https://learn.microsoft.com/en-us/linkedin/shared/references/reference-tables/industry-codes-v2)
+
 ## products/
 
 Returns a list of products.
@@ -303,3 +310,5 @@ Returns a list of courses
 ## schools/
 
 Returns a list of schools (mostly universities)
+
+
