@@ -1,6 +1,6 @@
 # LinkedInScraper
 
-A LinkedIn HTML Scraper designed to look for small companies to intern at
+A LinkedIn HTML Scraper designed to look for small companies to intern at.
 
 
 # LinkedIn URL hacking
@@ -311,4 +311,53 @@ Returns a list of courses
 
 Returns a list of schools (mostly universities)
 
+
+# Scraping the HTML
+
+## Parsing
+
+* The problem is, most of the HTML on the webpage is relatively useless to us
+* The solution? To filter the HTML of "junk" (of course it's not junk because it keeps the website running, but we don't need to know it)
+
+* Whenever we make a search (pretending to be a human) using the LinkedIn search engine, there is always a link to each company that appears on the search webpage.
+* We can exploit this, as in the href tag (that makes the HTML element a hyperlink), for links pertaining to companies, it will always be "https://www.linkedin.com/company/company-name"
+```
+<a class="qnYTlArzYtboRwdjbntMpxxVLYbykXIogw  scale-down " aria-hidden="true" tabindex="-1" href="https://www.linkedin.com/company/citi/" data-test-app-aware-link="">
+          
+    <div class="ivm-image-view-model   ">
+        
+    <div class="ivm-view-attr__img-wrapper
+        
+        ">
+<!---->
+<!---->          <img width="48" src="https://media.licdn.com/dms/image/v2/D4E0BAQFgF4xtqyXBcg/company-logo_100_100/company-logo_100_100/0/1719257286385/citi_logo?e=1768435200&amp;v=beta&amp;t=bx87C_c6SierPPkYnZvQqzw6xr7j9tg853_2iKgjM-c" loading="lazy" height="48" alt="Citi" id="ember30" class="ivm-view-attr__img--centered EntityPhoto-square-3   evi-image lazy-image ember-view">
+    </div>
+  
+          </div>
+  
+      </a>
+<a class="qnYTlArzYtboRwdjbntMpxxVLYbykXIogw " href="https://www.linkedin.com/company/citi/" data-test-app-aware-link="">
+              <!---->Citi<!---->
+<!---->            </a>
+```
+* Therefore, if we exclude all HTML elements except for containers containing that href, we can massively increase efficiency of scraping
+
+
+* We can further increase efficiency, by only looking at every second container.
+* This is because the first element is a link via clicking the company logo. However, the second element is a link via clicking the company name.
+* As we are primarily interested in the company name and LinkedIn page, we can exclude every odd element, leaving us with:
+```
+<a class="qnYTlArzYtboRwdjbntMpxxVLYbykXIogw " href="https://www.linkedin.com/company/citi/" data-test-app-aware-link="">
+              <!---->Citi<!---->
+<!---->            </a>
+```
+
+
+* Now, all we have to do is a little cleanup to get:
+```
+https://www.linkedin.com/company/citi/
+Citi
+```
+
+* And voila!
 
